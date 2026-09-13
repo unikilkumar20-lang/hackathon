@@ -1,0 +1,209 @@
+{
+  "fixture_version": "1.0.0",
+  "name": "Synthetic Multi-Application Sandbox",
+  "disclaimer": "Synthetic scenario — not a real scan. All packages, weights, and advisories in this sandbox are synthetic fixtures.",
+  "source_package": {
+    "name": "tiny-parse",
+    "version": "1.0.0",
+    "ecosystem": "npm",
+    "canonical_purl": "pkg:npm/tiny-parse@1.0.0",
+    "local_ref": "tiny-parse@1.0.0"
+  },
+  "assets": [
+    {
+      "asset_id": "asset-checkout",
+      "name": "Checkout Service",
+      "environment": "production",
+      "weight": 5,
+      "root_ref": "checkout-app"
+    },
+    {
+      "asset_id": "asset-billing",
+      "name": "Billing API",
+      "environment": "production",
+      "weight": 4,
+      "root_ref": "billing-app"
+    },
+    {
+      "asset_id": "asset-admin",
+      "name": "Admin Portal",
+      "environment": "internal",
+      "weight": 3,
+      "root_ref": "admin-app"
+    },
+    {
+      "asset_id": "asset-docs",
+      "name": "Developer Docs",
+      "environment": "staging",
+      "weight": 1,
+      "root_ref": "docs-app"
+    },
+    {
+      "asset_id": "asset-identity",
+      "name": "Identity Provider",
+      "environment": "production",
+      "weight": 5,
+      "root_ref": "identity-app"
+    }
+  ],
+  "occurrences": [
+    {
+      "local_ref": "tiny-parse@1.0.0",
+      "name": "tiny-parse",
+      "version": "1.0.0",
+      "ecosystem": "npm",
+      "purl": "pkg:npm/tiny-parse@1.0.0",
+      "metadata_json": { "description": "Synthetic JSON/header parser utility" }
+    },
+    {
+      "local_ref": "shared-http@2.1.0",
+      "name": "shared-http",
+      "version": "2.1.0",
+      "ecosystem": "npm",
+      "purl": "pkg:npm/shared-http@2.1.0",
+      "metadata_json": { "description": "Internal HTTP client wrapper" }
+    },
+    {
+      "local_ref": "logger-format@1.4.0",
+      "name": "logger-format",
+      "version": "1.4.0",
+      "ecosystem": "npm",
+      "purl": "pkg:npm/logger-format@1.4.0",
+      "metadata_json": { "description": "Structured logging formatter" }
+    },
+    {
+      "local_ref": "auth-helper@3.0.0",
+      "name": "auth-helper",
+      "version": "3.0.0",
+      "ecosystem": "npm",
+      "purl": "pkg:npm/auth-helper@3.0.0",
+      "metadata_json": { "description": "JWT validation and token unpacker" }
+    },
+    {
+      "local_ref": "docs-theme@1.0.0",
+      "name": "docs-theme",
+      "version": "1.0.0",
+      "ecosystem": "npm",
+      "purl": "pkg:npm/docs-theme@1.0.0",
+      "metadata_json": { "description": "Markdown documentation renderer" }
+    },
+    {
+      "local_ref": "id-vault@2.0.0",
+      "name": "id-vault",
+      "version": "2.0.0",
+      "ecosystem": "npm",
+      "purl": "pkg:npm/id-vault@2.0.0",
+      "metadata_json": { "description": "Isolated cryptographic key store" }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-checkout-http",
+      "from_ref": "checkout-app",
+      "to_ref": "shared-http@2.1.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-http-tinyparse",
+      "from_ref": "shared-http@2.1.0",
+      "to_ref": "tiny-parse@1.0.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-checkout-auth",
+      "from_ref": "checkout-app",
+      "to_ref": "auth-helper@3.0.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-billing-logger",
+      "from_ref": "billing-app",
+      "to_ref": "logger-format@1.4.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-logger-tinyparse",
+      "from_ref": "logger-format@1.4.0",
+      "to_ref": "tiny-parse@1.0.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-admin-auth",
+      "from_ref": "admin-app",
+      "to_ref": "auth-helper@3.0.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-auth-tinyparse",
+      "from_ref": "auth-helper@3.0.0",
+      "to_ref": "tiny-parse@1.0.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-docs-theme",
+      "from_ref": "docs-app",
+      "to_ref": "docs-theme@1.0.0",
+      "gate_default": "unknown",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-theme-tinyparse",
+      "from_ref": "docs-theme@1.0.0",
+      "to_ref": "tiny-parse@1.0.0",
+      "gate_default": "unknown",
+      "provenance": "fixture-manifest"
+    },
+    {
+      "id": "edge-identity-vault",
+      "from_ref": "identity-app",
+      "to_ref": "id-vault@2.0.0",
+      "gate_default": "true",
+      "provenance": "fixture-manifest"
+    }
+  ],
+  "candidate_controls": [
+    {
+      "id": "ctrl-disable-scripts-billing",
+      "label": "Disable lifecycle scripts in Billing environment",
+      "cost": 1,
+      "control_type": "disable_lifecycle_scripts",
+      "parameters": { "asset_id": "asset-billing" },
+      "mechanism_scope": "environment",
+      "assumptions": ["Install-script payload only; no impact on runtime payload"]
+    },
+    {
+      "id": "ctrl-cut-checkout-http",
+      "label": "Exclude shared-http -> tiny-parse route in Checkout",
+      "cost": 2,
+      "control_type": "exclude_dependency_route",
+      "parameters": { "edge_id": "edge-http-tinyparse" },
+      "mechanism_scope": "route",
+      "assumptions": ["Checkout also reaches tiny-parse via auth-helper (parallel path)"]
+    },
+    {
+      "id": "ctrl-cut-checkout-auth",
+      "label": "Exclude auth-helper -> tiny-parse route in Checkout",
+      "cost": 2,
+      "control_type": "exclude_dependency_route",
+      "parameters": { "edge_id": "edge-auth-tinyparse" },
+      "mechanism_scope": "route",
+      "assumptions": ["Requires both cuts to eliminate Checkout exposure"]
+    },
+    {
+      "id": "ctrl-replace-tinyparse",
+      "label": "Replace tiny-parse with verified internal parser",
+      "cost": 4,
+      "control_type": "replace_occurrence",
+      "parameters": { "occurrence_ref": "tiny-parse@1.0.0" },
+      "mechanism_scope": "global",
+      "assumptions": ["Eliminates exposure across all reachable applications"]
+    }
+  ]
+}

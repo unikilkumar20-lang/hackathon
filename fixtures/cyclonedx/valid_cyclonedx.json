@@ -1,0 +1,92 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "bom-ref": "web-gateway@2.0.0",
+      "type": "application",
+      "name": "web-gateway",
+      "version": "2.0.0",
+      "purl": "pkg:npm/web-gateway@2.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "express@4.19.2",
+      "type": "library",
+      "name": "express",
+      "version": "4.19.2",
+      "purl": "pkg:npm/express@4.19.2",
+      "description": "Fast, unopinionated, minimalist web framework"
+    },
+    {
+      "bom-ref": "body-parser@1.20.2",
+      "type": "library",
+      "name": "body-parser",
+      "version": "1.20.2",
+      "purl": "pkg:npm/body-parser@1.20.2",
+      "description": "Node.js body parsing middleware"
+    },
+    {
+      "bom-ref": "qs@6.11.0",
+      "type": "library",
+      "name": "qs",
+      "version": "6.11.0",
+      "purl": "pkg:npm/qs@6.11.0",
+      "description": "A querystring parser that supports nesting"
+    },
+    {
+      "bom-ref": "debug@4.3.4",
+      "type": "library",
+      "name": "debug",
+      "version": "4.3.4",
+      "purl": "pkg:npm/debug@4.3.4",
+      "description": "Small debugging utility"
+    },
+    {
+      "bom-ref": "ms@2.1.2",
+      "type": "library",
+      "name": "ms",
+      "version": "2.1.2",
+      "purl": "pkg:npm/ms@2.1.2",
+      "description": "Tiny millisecond conversion utility"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "web-gateway@2.0.0",
+      "dependsOn": [
+        "express@4.19.2",
+        "debug@4.3.4"
+      ]
+    },
+    {
+      "ref": "express@4.19.2",
+      "dependsOn": [
+        "body-parser@1.20.2",
+        "qs@6.11.0"
+      ]
+    },
+    {
+      "ref": "body-parser@1.20.2",
+      "dependsOn": [
+        "qs@6.11.0"
+      ]
+    },
+    {
+      "ref": "debug@4.3.4",
+      "dependsOn": [
+        "ms@2.1.2"
+      ]
+    },
+    {
+      "ref": "qs@6.11.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "ms@2.1.2",
+      "dependsOn": []
+    }
+  ]
+}

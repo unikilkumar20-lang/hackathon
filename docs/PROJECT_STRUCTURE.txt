@@ -1,0 +1,53 @@
+rippleguard/
+├── apps/
+│   └── web/                     # Frontend (Next.js App Router, React, TypeScript, Tailwind)
+│       ├── public/              # Static assets, logos, sample CycloneDX files
+│       ├── src/
+│       │   ├── app/             # Route views (/, /login, /signup, /demo, /dashboard, /projects/[id], etc.)
+│       │   ├── components/
+│       │   │   ├── ui/          # Reusable buttons, badges, modals, sliders
+│       │   │   ├── graph/       # Dependency graph, direction toggle, accessible table
+│       │   │   ├── scenarios/   # Source package selector, runtime/install toggle
+│       │   │   ├── mitigations/ # Budget slider, control checkboxes, comparison drawer
+│       │   │   └── evidence/    # Witness path proofs, OSV advisory cards
+│       │   ├── features/        # Firebase auth state, project CRUD, inventory upload
+│       │   ├── lib/
+│       │   │   ├── api-client.ts       # Typed fetch wrapper with Bearer token
+│       │   │   ├── firebase-client.ts  # Firebase Auth SDK (Google & Email sign-in)
+│       │   └── types.ts                # Core TypeScript domain models & DTOs
+│       ├── package.json
+│       └── .env.example
+├── services/
+│   └── api/                     # Backend (FastAPI + NetworkX + PostgreSQL + SQLAlchemy + Alembic)
+│       ├── app/
+│       │   ├── main.py          # FastAPI application factory & CORS setup
+│       │   ├── core/            # Config, Firebase Admin token verification, errors
+│       │   ├── api/v1/          # Endpoints (/health, /me, /projects, /snapshots, /runs, /export)
+│       │   ├── db/              # PostgreSQL models, SQLAlchemy session, Alembic
+│       │   ├── schemas/         # Pydantic schemas (OpenAPI contract)
+│       │   ├── ingestion/       # CycloneDX 1.5/1.6 parser & dangling ref checks
+│       │   ├── enrichment/      # OSV API client, alias deduplication, caching
+│       │   ├── analysis/        # NetworkX traversal, tri-state gate evaluations
+│       │   ├── optimization/    # Exact combinatorial subset search (candidate controls <= 8)
+│       │   └── reporting/       # Deterministic JSON run report generator
+│       ├── migrations/          # Alembic migrations
+│       ├── tests/
+│       │   ├── unit/            # Unit tests (models, gates, optimizer, parser)
+│       │   └── integration/     # API integration tests (auth, CRUD, isolation)
+│       ├── pyproject.toml
+│       └── .env.example
+├── fixtures/                    # Reference test datasets
+│   ├── synthetic-demo/          # 5 assets, tiny-parse@1.0.0 (18 total weight)
+│   ├── cyclonedx/               # Valid sample CycloneDX 1.5/1.6 JSON files
+│   └── invalid-inputs/          # Dangling references, circular, missing roots
+├── infra/
+│   └── docker-compose.yml       # Local PostgreSQL + FastAPI container runner
+├── docs/
+│   ├── PRD.md                   # Full Product Requirements Document
+│   ├── ARCHITECTURE.md          # System boundaries & data model
+│   ├── MODEL.md                 # Graph traversal, gates & exposure math
+│   ├── SECURITY.md              # Security considerations & fail-closed auth
+│   ├── FIREBASE_SETUP.md        # Firebase project configuration instructions
+│   └── IMPLEMENTATION_STATUS.md # Milestone progress tracking
+├── .gitignore
+└── README.md                    # Overview, quickstart, and verification guide
